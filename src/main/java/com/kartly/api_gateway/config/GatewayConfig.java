@@ -49,4 +49,20 @@ public class GatewayConfig {
                 .filter(lb("order-service"))
                 .build();
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> oauth2AuthorizationRoute() {
+        return route("oauth2-authorization-route")
+                .route(path("/oauth2/**"), HandlerFunctions.http())
+                .filter(lb("user-service"))
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> oauth2CallbackRoute() {
+        return route("oauth2-callback-route")
+                .route(path("/login/oauth2/**"), HandlerFunctions.http())
+                .filter(lb("user-service"))
+                .build();
+    }
 }
